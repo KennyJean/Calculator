@@ -8,12 +8,18 @@ const handleNumber = (value, state) => {
   if (state.currentValue === "0") {
     return { currentValue: `${value}` };
   }
+  ////////////////////////////////////
+  //this limits number to 9 digit
+  if (state.currentValue.length >= 9) {
+    return { };
+  }
+  ////////////////////////////////////
   return {
     currentValue: `${state.currentValue}${value}`,
   };
 };
 
-export const handleEqual = (state) => {
+const handleEqual = (state) => {
   const { currentValue, previousValue, operator } = state;
 
   const current = parseFloat(currentValue);
@@ -47,6 +53,16 @@ export const handleEqual = (state) => {
       ...resetState,
     };
   }
+  ///////////////////////////////////////////
+  //added the squareroot condition
+  //returns the current value
+  if (operator === "sqrt") {
+     return{
+       currentValue: Math.sqrt(previous),
+       ...resetState,
+     };
+   }
+   ///////////////////////////////////////////
 };
 
 const Calculator = (type, value, state) => {
